@@ -1,23 +1,32 @@
 <template>
   <section class="foods">
     <div class="menu-wrapper">
-      <ul class="menu">
-        <li class="menu-item" v-for="item in menu">{{item.name}}</li>
-      </ul>
+      <draggable class="menu list-group" element="ul" v-model="menu" :options="dragOptions" @start="isDragging=true" @end="isDragging=false">
+        <transition-group type="transition" :name="'flip-list'">
+          <li class="menu-item list-group-item" v-for="item in menu" :key="item.name">
+            <span class="text">{{item.name}}</span>
+          </li>
+        </transition-group>
+      </draggable>
     </div>
     <div class="food-wrapper">
-      <ul class="food-content" v-for="item in menu">
-        <span class="title">{{item.name}}</span>
-        <li class="foods" v-for="food in item.food">
+      <ul class="food-content list-group" v-for="item in menu">
+        <div class="title">{{item.name}}</div>
+        <li class="foods list-group-item" v-for="food in item.food">
           <span class="name">{{food.name}}</span>
           <span class="price">{{food.price}}</span>
         </li>
       </ul>
     </div>
+    <div class="list-group">
+    <pre>{{menu}}</pre>
+    </div>
   </section>
 </template>
 
 <script type="text/javascript">
+  import draggable from 'vuedraggable'
+
   export default {
     data() {
       return {
@@ -47,26 +56,78 @@
               {"food_id":7,"name":"黄瓜","price":"16"}
             ]
           }
-        ]
+        ],
+        editable: true,
+        isDragging: false,
+        delayedDragging: false
       }
+    },
+    computed: {
+      dragOptions() {
+        return {
+          animation: 0,
+          group: 'description',
+          disabled: !this.editable,
+          ghostClass: 'ghost'
+        }
+      }
+    },
+    components: {
+      draggable
     }
   }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .foods{
-    color: #fff;
+    // margin-top: 60px;
     display: flex;
     width: 80%;
+    color: rgb(7,17,27);
   }
   .menu-wrapper{
     flex: 0 0 60px;
     width: 60px;
-    text-align: center;
-    background: #792f54;
+    margin: 20px 10px 0 0;
+  }
+  .menu-wrapper .menu-item{
+    display: table;
+    margin-bottom: 10px;
+    cursor: move;
+  }
+  .menu-item .text{
+    display: table-cell;
+    vertical-align: middle;
   }
   .food-wrapper{
     flex: 1;
-    background: #352435;
+  }
+  .food-wrapper .title{
+    text-align: left;
+    padding-left: 16px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+  }
+  .food-wrapper .foods{
+    margin-bottom: 10px;
+    cursor: move;
+    position: relative;
+  }
+  .foods .price{
+    position: absolute;
+    right: 16px;
+  }
+  /* 定义动画 */
+  .flip-list-move {
+    transition: transform 0.5s;
+  }
+  .no-move {
+    transition: transform 0s;
+  }
+  .ghost {
+    opacity: 0.5;
+    background: #E7E7E7;
   }
 </style>

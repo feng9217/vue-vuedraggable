@@ -10,13 +10,15 @@
       </draggable>
     </div>
     <div class="food-wrapper">
-      <ul class="food-content list-group" v-for="item in menu">
+      <div class="food-content list-group" v-for="item in menu">
         <div class="title">{{item.name}}</div>
-        <li class="foods list-group-item" v-for="food in item.food">
-          <span class="name">{{food.name}}</span>
-          <span class="price">{{food.price}}</span>
-        </li>
-      </ul>
+        <draggable element="ul" v-model="item.food" :options="dragOptions" @start="isDragging=true" @end="isDragging=false">
+          <li class="foods list-group-item" v-for="food in item.food">
+            <span class="name">{{food.name}}</span>
+            <span class="price">{{food.price}}</span>
+          </li>
+        </draggable>
+      </div>
     </div>
     <div class="list-group">
     <pre>{{menu}}</pre>

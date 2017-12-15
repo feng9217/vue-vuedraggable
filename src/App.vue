@@ -1,21 +1,19 @@
 <template>
   <div id="app">
-    <example-simple/>
-    <example-complex></example-complex>
     <foods></foods>
   </div>
 </template>
 
 <script>
 import foods from './components/foods.vue'
-import exampleSimple from './components/example-simple'
-import exampleComplex from './components/example-complex.vue'
+// import exampleSimple from './components/example-simple'
+// import exampleComplex from './components/example-complex.vue'
 
 export default {
   name: 'app',
   components: {
-    exampleSimple,
-    exampleComplex,
+    // exampleSimple,
+    // exampleComplex,
     foods
   }
 }

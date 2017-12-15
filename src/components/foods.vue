@@ -1,4 +1,5 @@
 <template>
+  <div class="wrapper">
   <section class="foods">
     <div class="menu-wrapper">
       <draggable class="menu list-group" element="ul" v-model="menu" :options="dragOptions" @start="isDragging=true" @end="isDragging=false">
@@ -21,9 +22,19 @@
       </div>
     </div>
     <div class="list-group">
-    <pre>{{menu}}</pre>
+      <pre>{{menu}}</pre>
+    </div>
+    <div class="list-group">
+      <pre>{{newItem}}</pre>
     </div>
   </section>
+  <section class="form-wrapper">
+    <input type="text" name="菜式" placeholder="大菜/中菜/小菜">
+    <input type="text" name="'name'" placeholder="输入菜名" v-model.trim.lazy="newItem.name">
+    <input type="text" name="'price'" placeholder="输入价格" v-model.number="newItem.price">
+    <button type="submit" class="btn btn-info" @click="submit">提交</button>
+  </section>
+  </div>
 </template>
 
 <script type="text/javascript">
@@ -61,7 +72,8 @@
         ],
         editable: true,
         isDragging: false,
-        delayedDragging: false
+        delayedDragging: false,
+        newItem: {}
       }
     },
     computed: {
@@ -72,6 +84,26 @@
           disabled: !this.editable,
           ghostClass: 'ghost'
         }
+      }
+    },
+    methods: {
+      submit() {
+        let length = 0
+        let food = []
+        // for(let i=0; i<this.menu.length; i++) {
+        //   food.push(this.menu[i])
+        // }
+        // console.log(food)
+        // food.forEach((item) => {
+        //   console.log(item.food.food_id)
+        //   // for(let i=0; i<item.length; i++){
+        //   //   console.log(item.food)
+        //   // }
+        // })
+        food = this.menu.filter((food_id) => {
+          return food_id > 0
+        })
+        console.log(food)
       }
     },
     components: {
@@ -120,6 +152,20 @@
   .foods .price{
     position: absolute;
     right: 16px;
+  }
+  .form-wrapper{
+    margin-top: 20px;
+    width: 600px;
+    border: 1px solid #E7E7E7;
+    border-radius: 4px;
+    padding: 10px 10px;
+    display: flex;
+  }
+  .form-wrapper input{
+    flex: 1;
+    width: 60px;
+    margin: 0 10px;
+    padding: 0 10px;
   }
   /* 定义动画 */
   .flip-list-move {

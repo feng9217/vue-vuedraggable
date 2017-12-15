@@ -34,5 +34,5 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 目录中还附有一个简单的Demo 一个vuedraggable作者的完整Demo  
 可直接以组件方式引入查看  
 演示:  
-![demo gif1](../gif/demo1.gif)  
+![demo gif1](https://github.com/feng9217/vue-vuedraggable/blob/master/gif/demo1.gif)  
 ![demo gif2](https://github.com/feng9217/vue-vuedraggable/blob/master/gif/demo2.gif)  

@@ -29,7 +29,7 @@
     </div>
   </section>
   <section class="form-wrapper">
-    <input type="text" name="菜式" placeholder="大菜/中菜/小菜">
+    <input type="text" name="菜式" placeholder="大菜/中菜/小菜" @change="setId" ref="sort">
     <input type="text" name="'name'" placeholder="输入菜名" v-model.trim.lazy="newItem.name">
     <input type="text" name="'price'" placeholder="输入价格" v-model.number="newItem.price">
     <button type="submit" class="btn btn-info" @click="submit">提交</button>
@@ -87,23 +87,49 @@
       }
     },
     methods: {
+      setId() {
+        let count = []
+        let foods = this.menu
+        // console.log(foods)
+        // 遍历 生成不重复的 food_id
+        for(let i=0; i<foods.length; i++) {
+          let food = foods[i].food
+          // console.log(food)
+          for(let j=0; j<food.length;j++) {
+            count.push(food[j].food_id)
+          }
+        }
+        // console.log(count)
+        this.newItem.food_id = count.length + 1
+        // console.log(this.newItem)
+      },
+      searchOrder(id) {
+        for (let i=0; i<this.menu.length; i++) {
+          if(this.menu[i].type_id === id) {
+            return i
+          }
+        }
+      },
       submit() {
-        let length = 0
-        let food = []
-        // for(let i=0; i<this.menu.length; i++) {
-        //   food.push(this.menu[i])
-        // }
-        // console.log(food)
-        // food.forEach((item) => {
-        //   console.log(item.food.food_id)
-        //   // for(let i=0; i<item.length; i++){
-        //   //   console.log(item.food)
-        //   // }
-        // })
-        food = this.menu.filter((food_id) => {
-          return food_id > 0
-        })
-        console.log(food)
+        let child = this.newItem
+        // console.log(child)
+        // 根据菜式插入对应数组中
+        let value = this.$refs.sort.value
+        // console.log(value)
+        if (!value) {
+          console.log('值还没输完呢!!!')
+          return
+        }
+        if (value === '大菜') {
+          this.menu[this.searchOrder(1)].food.push(this.newItem)
+        } else if (value === '中菜') {
+          this.menu[this.searchOrder(2)].food.push(this.newItem)
+        } else {
+          this.menu[this.searchOrder(3)].food.push(this.newItem)
+        }
+        // 清空为初始值
+        this.newItem = {}
+        this.$refs.sort.value = ''
       }
     },
     components: {

@@ -36,3 +36,15 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 演示:  
 ![demo gif1](https://github.com/feng9217/vue-vuedraggable/blob/master/gif/demo1.gif)  
 ![demo gif2](https://github.com/feng9217/vue-vuedraggable/blob/master/gif/demo2.gif)  
+  
+***
+PS: 在把包下下来后, npm install后, 运行时会提示错误:  
+To install it, you can run: npm install --save !!vue-style-loader!css-loader?{"sourceMap":false}!../../node_modules/vue-loader/lib/style-compiler/index?{"vue":true,"id":"data-v-5dfb6395","scoped":true,"hasInlineConfig":false}!stylus-loader?{"sourceMap":false}!../../node_modules/vue-loader/lib/selector?type=styles&index=0&bustCache!./foods.vue  
+  
+解决方法是: 当前目录（项目）下  
+  
+npm install stylus-loader css-loader style-loader --save-dev  
+并且  
+npm install stylus  
+这样就没有缺少的不能加载的模块了  
+npm run dev也不会报错了  
